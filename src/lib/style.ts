@@ -34,47 +34,56 @@ export function gen_style(style: StyleSpecification) {
           ],
           [
             24943999,
-            24944222,
-            24944258,
-            27031336,
-            27282950,
-            44450008,
-            44450010,
-            44509206,
-            44674342,
-            44733081,
-            44818030,
-            44818654,
-            82295304,
-            82296648,
-            82862309,
-            146350133,
-            158428939,
-            229776317,
-            235367063,
-            267825123,
-            328709670,
-            329052411,
-            329052413,
-            329075071,
-            569405743,
-            569405744,
-            569405745,
-            569410623,
-            569410627,
-            569410628,
-            569410629,
-            569410630,
-            569410631,
-            569410634,
-            569410635,
-            569410636,
-            569410637,
-            569410640,
-            569410641,
-            569410643,
-            569410644,
-            981300176
+                      24944222,
+                      24944258,
+                      27031336,
+                      27282446,
+                      27282950,
+                      44450008,
+                      44450010,
+                      44509206,
+                      44674342,
+                      44733081,
+                      44818030,
+                      44818654,
+                      82295304,
+                      82296648,
+                      82303835,
+                      82862309,
+                      146350133,
+                      158428939,
+                      166502326,
+                      229531420,
+                      229776317,
+                      235367063,
+                      267825123,
+                      297379872,
+                      297429226,
+                      323348496,
+                      328705029,
+                      328709670,
+                      329052411,
+                      329052413,
+                      329075071,
+                      569405743,
+                      569405744,
+                      569405745,
+                      569410623,
+                      569410627,
+                      569410628,
+                      569410629,
+                      569410630,
+                      569410631,
+                      569410634,
+                      569410635,
+                      569410636,
+                      569410637,
+                      569410640,
+                      569410641,
+                      569410643,
+                      569410644,
+                      962189608,
+                      981300176
           ],
           true,
           false
@@ -96,7 +105,7 @@ export function gen_style(style: StyleSpecification) {
   })
 
   style.layers.push({
-    "id": "tributary",
+    "id": "yamuna line",
     "type": "line",
     "source": "maptiler_planet",
     "source-layer": "waterway",
@@ -143,7 +152,7 @@ export function gen_style(style: StyleSpecification) {
   });
 
   style.layers.push({
-    "id": "tributary copy",
+    "id": "yamuna text",
     "type": "symbol",
     "source": "maptiler_planet",
     "source-layer": "waterway",
@@ -205,8 +214,9 @@ export function gen_style(style: StyleSpecification) {
     ]
   });
 
+  // Ganga river
   style.layers.push({
-    "id": "Waterway",
+    "id": "ganga_river",
     "type": "line",
     "source": "maptiler_planet",
     "source-layer": "waterway",
@@ -329,6 +339,188 @@ export function gen_style(style: StyleSpecification) {
     "source-layer": "waterway"
   })
 
+  style.layers.push({
+    "id": "Okhla",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "layout": {
+      "text-field": "Okhla Barrage",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "icon-keep-upright": true,
+      "text-anchor": "center",
+      "symbol-placement": "point",
+      "text-size": 25
+    },
+    "paint": {
+      "icon-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "icon-halo-width": 1,
+      "text-halo-width": 1,
+      "text-translate": [
+        310,
+        432
+      ]
+    },
+    "filter": [
+      "all",
+      [
+        "match",
+        [
+          "id"
+        ],
+        [
+          34869434
+        ],
+        true,
+        false
+      ],
+      [
+        "==",
+        [
+          "geometry-type"
+        ],
+        "LineString"
+      ]
+    ],
+    "source-layer": "waterway"
+  })
+
+  style.layers.push({
+    "id": "rahmsar",
+    "type": "line",
+    "source": "maptiler_planet",
+    "layout": {
+      "line-cap": "round",
+      "line-join": "round"
+    },
+    "paint": {
+      "line-color": "#d32f2f",
+      "line-width": 14
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        [
+          "geometry-type"
+        ],
+        "LineString"
+      ],
+      [
+        "match",
+        [
+          "id"
+        ],
+        [
+          82295315
+        ],
+        true,
+        false
+      ]
+    ],
+    "source-layer": "waterway"
+  })
+
+  style.layers.push({
+    "id": "Varanasi Name",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "layout": {
+      "text-field": "Varanasi",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-size": [
+        "step",
+        [
+          "zoom"
+        ],
+        0,
+        8.2,
+        31
+      ]
+    },
+    "paint": {
+      "icon-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "icon-halo-width": 1,
+      "text-halo-width": 1
+    },
+    "filter": [
+      "all",
+      [
+        "match",
+        [
+          "get",
+          "name"
+        ],
+        [
+          "Varanasi"
+        ],
+        true,
+        false
+      ],
+      [
+        "==",
+        [
+          "geometry-type"
+        ],
+        "Point"
+      ]
+    ],
+    "source-layer": "place"
+  })
+
+  style.layers.push({
+    "id": "rahmsar copy",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "layout": {
+      "text-field": "Narora Ramsar Site",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "visibility": "visible",
+      "text-justify": "center",
+      "icon-keep-upright": true,
+      "symbol-placement": "point",
+      "text-anchor": "bottom",
+      "text-padding": 0,
+      "text-radial-offset": 0,
+      "text-size": 33
+    },
+    "paint": {
+      "text-color": "#d32f2f",
+      "icon-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "icon-halo-width": 1,
+      "text-halo-width": 1
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        [
+          "geometry-type"
+        ],
+        "LineString"
+      ],
+      [
+        "match",
+        [
+          "id"
+        ],
+        [
+          82295315
+        ],
+        true,
+        false
+      ]
+    ],
+    "source-layer": "waterway"
+  })
 
   return style;
 }

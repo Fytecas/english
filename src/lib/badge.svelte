@@ -1,14 +1,38 @@
 <script lang="ts">
-    let {point} = $props();
+    let {point, onselect, show, orientation} = $props();
+
+    let containerClass = $state();
+    let tipClass = $state();
+    switch (orientation) {
+      case "top":
+        containerClass = "container top";
+        tipClass = "top_tip";
+        break;
+      case "right":
+        containerClass = "container right";
+        tipClass = "right_tip";
+        break;
+      case "left":
+        containerClass = "container left";
+        tipClass = "left_tip";
+        break;
+      default:
+        containerClass = "container";
+        tipClass = "";
+    }
 </script>
 
 <div id={`badge-${point.id}`}>
-    <div class="container right">
-    <span class='right_tip'></span>
+    {#if show}
+    <div class={containerClass}>
+    <span class={tipClass}></span>
 
-    <span class="title">{point.title}</span>
-
+    <span class="title"><span class="number">{point.id}. </span>{point.title}</span>
+    <button class="select-button" onclick={() => {
+      onselect(point);
+    }}>Go !</button>
     </div>
+    {/if}
 </div>
 
 <style>
@@ -37,6 +61,19 @@
         transform: translateY(-50%);
     }
 
+    .left_tip {
+        display:block;
+        height:1px;
+        width: 1px;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 8px solid #f5f5f5;
+        position: absolute;
+        left: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
     .title {
         font-size: 24px;
         font-weight: bold;
@@ -45,17 +82,42 @@
 
     .container {
         display: flex;
+        gap: 5px;
         flex-direction: column;
         align-items: left;
         justify-content: left;
-        padding: 1rem;
-        border-radius: 0.5rem;
+        padding: 10px;
+        border-radius: 10px;
         background-color: #f5f5f5;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .container.right {
         transform: translateX(-65%);
+    }
+
+    .container.top {
+        transform: translateY(50%);
+    }
+
+    .container.left {
+        transform: translateX(50%);
+    }
+
+    .select-button {
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
+    .number {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+        margin-right: 5px;
     }
 
 </style>
