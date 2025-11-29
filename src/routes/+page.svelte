@@ -39,7 +39,7 @@
     const Gomuck: MapPosition = {lng: 79.0839672088623, lat: 30.92615685415305
     ,pitch: 45.005443460589376
     ,bearing: 51.006147019862055
-    ,zoom: 12.72041144530694 };
+    ,zoom: 14.5041144530694 };
 
     const Varanasi: MapPosition = {lng: 83.01928194578204, lat: 25.31454666917712
     ,pitch: 0
@@ -54,8 +54,7 @@
 
 
     // null -> no point selected
-    // a string -> the point id
-    let selected_point: string | null = null;
+    let selected_point: any | null = null;
 
     const points = [
         {
@@ -63,24 +62,28 @@
             title: "New Delhi",
             pos: Okhla_barrage,
             tip_orientation: "right",
+            audio_url: "test.mp3"
         },
         {
             id: "1",
             title: "The Gomuck source",
             pos: Gomuck,
             tip_orientation: "left",
+            audio_url: "test.mp3"
         },
         {
           id: "4",
           title: "Varanasi",
           pos: Varanasi,
-          tip_orientation: "top"
+          tip_orientation: "top",
+          audio_url: "test.mp3"
         },
         {
           id: "3",
           title: "Narora Ramsar Site",
           pos: Narora,
-          tip_orientation: "left"
+          tip_orientation: "left",
+          audio_url: "test.mp3"
         }
     ];
 
@@ -92,15 +95,13 @@
             style: "019ac709-2e2b-7045-b486-6c12ad7ee576",
             center: [Northern_India.lng, Northern_India.lat],
             zoom: Northern_India.zoom,
-            // terrain: true,
-            // terrainControl: true,
-            // scaleControl: false,
-            // forceNoAttributionControl: false,
-            // navigationControl: false,
-            // geolocateControl: false,
-            // dragPan: false,
-            // scrollZoom: false,
-            // doubleClickZoom: false
+            terrainControl: true,
+            scaleControl: false,
+            navigationControl: false,
+            geolocateControl: false,
+            dragPan: false,
+            scrollZoom: false,
+            doubleClickZoom: false,
         });
 
         new Marker()
@@ -126,7 +127,6 @@
             let style = map?.getStyle();
             if (!style) return;
             map?.setStyle(gen_style(style));
-            // switch_map_on(Uttarakhand);
         });
 
         map.on("click", (e) => console.log(e))
@@ -173,21 +173,25 @@
     <button
         class="home-button"
         onclick={() => {
-            let id = selected_point;
             selected_point = null;
             switch_map_on(Northern_India);
         }}
     >
         {"<- Return to the map"}
     </button>
+
+    <div class="player">
+        <audio controls>
+            <source src={selected_point.audio_url} type="audio/mpeg">
+        </audio>
+    </div>
 {/if}
 
 {#each points as point}
     <Badge
         {point}
         onselect={() => {
-            let id = point.id;
-            selected_point = id;
+            selected_point = point;
             switch_map_on(point.pos);
         }}
         show={selected_point == null}
@@ -213,6 +217,20 @@
         z-index: 1000;
         top: 10px;
         left: 10px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 25px;
+    }
+
+    .player {
+        position: absolute;
+        z-index: 1000;
+        bottom: 10px;
+        /*Center the player horizontally*/
+        left: 50%;
+        transform: translateX(-50%);
         background-color: #007bff;
         border: none;
         border-radius: 10px;
