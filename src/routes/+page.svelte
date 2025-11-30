@@ -211,6 +211,9 @@
         <span class="player-title">The pollution of the Ganges River</span>
         <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
     </div>
+    <audio controls>
+        <source src="test.mp3" type="audio/mpeg">
+    </audio>
 </div>
 {/if}
 
