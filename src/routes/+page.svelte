@@ -5,7 +5,7 @@
     import { gen_style } from "$lib/style";
     import Badge from "$lib/badge.svelte";
     import { ArrowLeftIcon, MapIcon } from "@lucide/svelte";
-    import { slide } from "svelte/transition";
+    import { fade, slide } from "svelte/transition";
 
     let map: Map | undefined;
     let mapContainer: HTMLDivElement | undefined;
@@ -140,7 +140,7 @@
             zoom: pos.zoom,
             pitch: pos.pitch,
             bearing: pos.bearing,
-            duration: 2500,
+            duration: 1500,
         });
     }
 
@@ -178,11 +178,15 @@
             selected_point = null;
             switch_map_on(Northern_India);
         }}
+
+        in:slide={{delay: 500, axis: 'x'}}
+        out:slide={{axis: 'x'}}
+
     >
         <ArrowLeftIcon/> Return to the map
     </button>
 
-    <div class="player" in:slide={{delay: 2000}}>
+    <div class="player" in:slide={{delay: 1000}} out:slide>
         <audio controls>
             <source src={selected_point.audio_url} type="audio/mpeg">
         </audio>
@@ -231,6 +235,9 @@
         gap: 10px;
 
         transition: background-color 0.3s ease;
+
+        text-wrap: nowrap;
+        flex-wrap: nowrap;
     }
 
     .home-button:hover {

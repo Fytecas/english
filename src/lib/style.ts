@@ -56,6 +56,55 @@ export function gen_style(style: StyleSpecification) {
   })
 
   style.layers.push({
+    "id": "Country borders",
+    "type": "line",
+    "source": "maptiler_planet",
+    "source-layer": "boundary",
+    "layout": {
+      "line-cap": "round",
+      "line-join": "round",
+      "visibility": "visible"
+    },
+    "paint": {
+      "line-color": "hsl(0, 0%, 94%)",
+      "line-width": [
+        "interpolate",
+        [
+          "exponential",
+          1.5
+        ],
+        [
+          "zoom"
+        ],
+        3,
+        0.5,
+        9,
+        1.5,
+        22,
+        32
+      ]
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        "admin_level",
+        2
+      ],
+      [
+        "==",
+        "maritime",
+        0
+      ],
+      [
+        "==",
+        "disputed",
+        0
+      ]
+    ]
+  })
+
+  style.layers.push({
     "id": "yamuna line",
     "type": "line",
     "source": "maptiler_planet",
@@ -471,6 +520,119 @@ export function gen_style(style: StyleSpecification) {
       ]
     ],
     "source-layer": "waterway"
+  })
+
+  style.layers.push({
+    "id": "Country names",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "source-layer": "place",
+    "minzoom": 1,
+    "maxzoom": 12,
+    "layout": {
+      "symbol-sort-key": [
+        "to-number",
+        [
+          "get",
+          "rank"
+        ]
+      ],
+      "text-field": "{name:en}",
+      "text-font": [
+        "Noto Sans Bold"
+      ],
+      "text-max-width": 10,
+      "text-size": [
+        "interpolate",
+        [
+          "linear",
+          0.75,
+          1,
+          0.75,
+          1
+        ],
+        [
+          "zoom"
+        ],
+        1,
+        [
+          "step",
+          [
+            "get",
+            "rank"
+          ],
+          13,
+          1,
+          12,
+          2,
+          12
+        ],
+        4,
+        [
+          "step",
+          [
+            "get",
+            "rank"
+          ],
+          15,
+          1,
+          14,
+          2,
+          14
+        ],
+        6,
+        [
+          "step",
+          [
+            "get",
+            "rank"
+          ],
+          23,
+          1,
+          18,
+          2,
+          18
+        ],
+        9,
+        [
+          "step",
+          [
+            "get",
+            "rank"
+          ],
+          27,
+          1,
+          22,
+          2,
+          22
+        ]
+      ],
+      "visibility": "visible"
+    },
+    "paint": {
+      "text-color": "hsl(0, 0%, 100%)",
+      "text-halo-blur": 1,
+      "text-halo-color": "hsl(0, 0%, 0%)",
+      "text-halo-width": 1
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        "$type",
+        "Point"
+      ],
+      [
+        "in",
+        "class",
+        "country"
+      ],
+      [
+        "!=",
+        "iso_a2",
+        "VA"
+      ]
+    ]
   })
 
   return style;
