@@ -205,6 +205,13 @@
 <button class="info-button home-button" in:slide={{delay: 500, axis: 'x'}} out:slide={{axis: 'x'}} onclick={() => info_modal_open = !info_modal_open}>
     <InfoIcon/>
 </button>
+
+<div class="player" in:slide={{delay: 1000}} out:slide>
+    <div class="player-content">
+        <span class="player-title">The pollution of the Ganges River</span>
+        <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
+    </div>
+</div>
 {/if}
 
 {#if info_modal_open && !selected_point}
