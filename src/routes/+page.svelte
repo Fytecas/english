@@ -4,6 +4,8 @@
     import "@maptiler/sdk/dist/maptiler-sdk.css";
     import { gen_style } from "$lib/style";
     import Badge from "$lib/badge.svelte";
+    import { ArrowLeftIcon, MapIcon } from "@lucide/svelte";
+    import { slide } from "svelte/transition";
 
     let map: Map | undefined;
     let mapContainer: HTMLDivElement | undefined;
@@ -138,7 +140,7 @@
             zoom: pos.zoom,
             pitch: pos.pitch,
             bearing: pos.bearing,
-            duration: 3000,
+            duration: 2500,
         });
     }
 
@@ -177,10 +179,10 @@
             switch_map_on(Northern_India);
         }}
     >
-        {"<- Return to the map"}
+        <ArrowLeftIcon/> Return to the map
     </button>
 
-    <div class="player">
+    <div class="player" in:slide={{delay: 2000}}>
         <audio controls>
             <source src={selected_point.audio_url} type="audio/mpeg">
         </audio>
@@ -219,9 +221,24 @@
         left: 10px;
         background-color: #007bff;
         border: none;
-        border-radius: 10px;
-        padding: 10px;
+        color: white;
+        border-radius: 100px;
+        padding: 10px 15px;
         font-size: 25px;
+
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        transition: background-color 0.3s ease;
+    }
+
+    .home-button:hover {
+        background-color: #0056b3;
+    }
+
+    .home-button:active {
+        background-color: #004085;
     }
 
     .player {
@@ -235,6 +252,7 @@
         border: none;
         border-radius: 10px;
         padding: 10px;
+        padding-bottom: 5px;
         font-size: 25px;
     }
 </style>

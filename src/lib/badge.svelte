@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { ZoomInIcon } from "@lucide/svelte";
+
     let {point, onselect, show, orientation} = $props();
 
     let containerClass = $state();
@@ -30,7 +32,7 @@
     <span class="title"><span class="number">{point.id}. </span>{point.title}</span>
     <button class="select-button" onclick={() => {
       onselect(point);
-    }}>Go !</button>
+    }}><ZoomInIcon size={16}/>Go !</button>
     </div>
     {/if}
 </div>
@@ -105,12 +107,23 @@
     }
 
     .select-button {
-        padding: 5px 10px;
+        padding: 6px 10px;
         border-radius: 5px;
         background-color: #007bff;
         color: #fff;
         border: none;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        gap: 5px;
+
+        transition: background-color 0.3s ease;
+    }
+
+    .select-button:hover {
+        background-color: #0056b3;
     }
 
     .number {

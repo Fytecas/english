@@ -1,0 +1,4 @@
+- add opinion capsule
+- add photos?
+- add info modal with licences
+- add India title ?
