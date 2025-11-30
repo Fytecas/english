@@ -80,6 +80,7 @@
         font-size: 24px;
         font-weight: bold;
         color: #333;
+        max-width: 200px;
     }
 
     .container {

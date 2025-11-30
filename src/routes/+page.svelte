@@ -51,9 +51,7 @@
     const Narora: MapPosition = {lng: 78.26237957276112, lat: 28.50007094077131
     ,pitch: 0
     ,bearing: 0
-    ,zoom: 10.381600682285741 };
-
-
+    ,zoom: 9.881600682285741 };
 
     // null -> no point selected
     let selected_point: any | null = null;
