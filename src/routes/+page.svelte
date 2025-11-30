@@ -4,7 +4,7 @@
     import "@maptiler/sdk/dist/maptiler-sdk.css";
     import { gen_style } from "$lib/style";
     import Badge from "$lib/badge.svelte";
-    import { ArrowLeftIcon, MapIcon } from "@lucide/svelte";
+    import { ArrowLeftIcon, CopyrightIcon, InfoIcon, MapIcon, XIcon } from "@lucide/svelte";
     import { fade, slide } from "svelte/transition";
 
     let map: Map | undefined;
@@ -58,34 +58,40 @@
     // null -> no point selected
     let selected_point: any | null = null;
 
+    let info_modal_open = false;
+
     const points = [
         {
             id: "2",
             title: "New Delhi",
             pos: Okhla_barrage,
             tip_orientation: "right",
-            audio_url: "test.mp3"
+            audio_url: "test.mp3",
+            author: "Mathilde"
         },
         {
             id: "1",
             title: "The Gomuck source",
             pos: Gomuck,
             tip_orientation: "left",
-            audio_url: "test.mp3"
+            audio_url: "test.mp3",
+            author: "Clovis"
         },
         {
           id: "4",
           title: "Varanasi",
           pos: Varanasi,
           tip_orientation: "top",
-          audio_url: "test.mp3"
+          audio_url: "test.mp3",
+          author: "Jawad"
         },
         {
           id: "3",
           title: "Narora Ramsar Site",
           pos: Narora,
           tip_orientation: "left",
-          audio_url: "test.mp3"
+          audio_url: "test.mp3",
+          author: "Dario"
         }
     ];
 
@@ -187,9 +193,31 @@
     </button>
 
     <div class="player" in:slide={{delay: 1000}} out:slide>
+        <div class="player-content">
+        <span class="player-title">{selected_point.title}</span>
+        <span class="player-author">{selected_point.author}</span>
+        </div>
         <audio controls>
             <source src={selected_point.audio_url} type="audio/mpeg">
         </audio>
+    </div>
+{:else}
+<button class="info-button home-button" in:slide={{delay: 500, axis: 'x'}} out:slide={{axis: 'x'}} onclick={() => info_modal_open = !info_modal_open}>
+    <InfoIcon/>
+</button>
+{/if}
+
+{#if info_modal_open && !selected_point}
+    <div class="info-modal" in:slide out:slide>
+        <button class="close-button" onclick={() => info_modal_open = false}>
+            <XIcon/>
+        </button>
+        <div class="info-content">
+            <h2>About the Map</h2>
+            <p>This map shows the pollution of the Ganges River across various points of interest.</p>
+            <p>This entire website was programmed by Le Hy Dario, the creators of each voice recording can be found in the corresponding points on the map.</p>
+            <p style="font-weight: bold;">Any copy of the content of this website, and more importantly, the voice recordings, is strictly prohibited without prior written consent by the creator.</p>
+        </div>
     </div>
 {/if}
 
@@ -206,6 +234,34 @@
 {/each}
 
 <style>
+
+    .info-modal {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+    }
+
+    .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: transparent;
+        border: none;
+        color: #007bff;
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .info-content {
+        margin-top: 20px;
+    }
+
     .map-wrap {
         position: relative;
         width: 100%;
@@ -259,7 +315,26 @@
         border: none;
         border-radius: 10px;
         padding: 10px;
-        padding-bottom: 5px;
+        font-weight: bold;
+        /*padding-bottom: 5px;*/
         font-size: 25px;
+
+        display: flex;
+        align-items: flex-start;
+        color: white;
+        gap: 10px;
+        flex-direction: column;
+    }
+
+    .player-author {
+        font-size: 18px;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    .player-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
     }
 </style>
