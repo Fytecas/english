@@ -25,7 +25,7 @@
         bearing: 0,
     };
     const Northern_India: MapPosition = {
-        lng: 85.02898,
+        lng: 83.02898,
         lat: 26.46599,
         zoom: 5.5,
         pitch: 0,
