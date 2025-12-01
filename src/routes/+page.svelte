@@ -225,7 +225,32 @@
             <p>This map shows the pollution of the Ganges River across various points of interest.</p>
             <p>This entire website was programmed by Le Hy Dario, the creators of each voice recording can be found in the corresponding points on the map.</p>
             <p style="font-weight: bold;">Any copy of the content of this website, and more importantly, the voice recordings, is strictly prohibited without prior written consent by the creator.</p>
-        </div>
+            <p>
+            The following licence applies to the code and other content, excluding the voice recordings which are subject to the copyright notice above.
+
+MIT License
+
+Copyright (c) 2025 Dario Le Hy
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</p>
+</div>
     </div>
 {/if}
 
