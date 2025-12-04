@@ -155,6 +155,8 @@
     }
 
     function switch_map_on(pos: MapPosition) {
+      let current_sel = selected_point;
+      selected_point = null;
         map?.easeTo({
             center: [pos.lng, pos.lat],
             zoom: pos.zoom,
@@ -162,6 +164,11 @@
             bearing: pos.bearing,
             duration: 1500,
         });
+        setTimeout(() => {
+          if(current_sel){
+            selected_point = current_sel;
+          }
+        }, 500);
     }
 
     onMount(() => {
@@ -205,7 +212,7 @@
 
     {#if points.indexOf(selected_point) > 0}
         <button
-            in:slide={{ delay: 500}}
+            in:slide={{ delay: 500 }}
             out:slide
             class="button back-button"
             onclick={() => {
@@ -224,7 +231,7 @@
 
     <button
         class="button next-button"
-        in:slide={{ delay: 500}}
+        in:slide={{ delay: 500 }}
         out:slide
         onclick={() => {
             if (selected_point != null) {
@@ -242,6 +249,7 @@
         <ArrowRightIcon /> Next
     </button>
 
+
     <div class="player" in:slide={{ delay: 1000 }} out:slide>
         <div class="player-content">
             <span class="player-title"
@@ -249,7 +257,7 @@
             >
             <span class="player-author">{selected_point.author}</span>
         </div>
-        <audio controls>
+        <audio controls aria-details={selected_point.audio_url}>
             <source src={selected_point.audio_url} type="audio/mpeg" />
         </audio>
     </div>
