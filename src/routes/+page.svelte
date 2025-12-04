@@ -4,7 +4,14 @@
     import "@maptiler/sdk/dist/maptiler-sdk.css";
     import { gen_style } from "$lib/style";
     import Badge from "$lib/badge.svelte";
-    import { ArrowLeftIcon, CopyrightIcon, InfoIcon, MapIcon, XIcon } from "@lucide/svelte";
+    import {
+        ArrowLeftIcon,
+        ArrowRightIcon,
+        CopyrightIcon,
+        InfoIcon,
+        MapIcon,
+        XIcon,
+    } from "@lucide/svelte";
     import { fade, slide } from "svelte/transition";
 
     let map: Map | undefined;
@@ -38,20 +45,29 @@
         pitch: 43.000000000000014,
         bearing: 26.10322121772288,
     };
-    const Gomuck: MapPosition = {lng: 79.0839672088623, lat: 30.92615685415305
-    ,pitch: 45.005443460589376
-    ,bearing: 51.006147019862055
-    ,zoom: 14.5041144530694 };
+    const Gomuck: MapPosition = {
+        lng: 79.0839672088623,
+        lat: 30.92615685415305,
+        pitch: 45.005443460589376,
+        bearing: 51.006147019862055,
+        zoom: 14.5041144530694,
+    };
 
-    const Varanasi: MapPosition = {lng: 83.01928194578204, lat: 25.31454666917712
-    ,pitch: 0
-    ,bearing: 0
-    ,zoom: 11.899513654791 };
+    const Varanasi: MapPosition = {
+        lng: 83.01928194578204,
+        lat: 25.31454666917712,
+        pitch: 0,
+        bearing: 0,
+        zoom: 11.899513654791,
+    };
 
-    const Narora: MapPosition = {lng: 78.26237957276112, lat: 28.50007094077131
-    ,pitch: 0
-    ,bearing: 0
-    ,zoom: 9.881600682285741 };
+    const Narora: MapPosition = {
+        lng: 78.26237957276112,
+        lat: 28.50007094077131,
+        pitch: 0,
+        bearing: 0,
+        zoom: 9.881600682285741,
+    };
 
     // null -> no point selected
     let selected_point: any | null = null;
@@ -60,37 +76,37 @@
 
     const points = [
         {
-            id: "2",
-            title: "New Delhi",
-            pos: Okhla_barrage,
-            tip_orientation: "right",
-            audio_url: "mathilde.mp3",
-            author: "Mathilde"
-        },
-        {
             id: "1",
             title: "The Gomuck source",
             pos: Gomuck,
             tip_orientation: "left",
             audio_url: "clovis.m4a",
-            author: "Clovis"
+            author: "Clovis",
         },
         {
-          id: "4",
-          title: "Varanasi",
-          pos: Varanasi,
-          tip_orientation: "top",
-          audio_url: "jawad.aac",
-          author: "Jawad"
+            id: "2",
+            title: "New Delhi",
+            pos: Okhla_barrage,
+            tip_orientation: "right",
+            audio_url: "mathilde.mp3",
+            author: "Mathilde",
         },
         {
-          id: "3",
-          title: "Narora Ramsar Site",
-          pos: Narora,
-          tip_orientation: "left",
-          audio_url: "dario.mp3",
-          author: "Dario"
-        }
+            id: "3",
+            title: "Narora Ramsar Site",
+            pos: Narora,
+            tip_orientation: "left",
+            audio_url: "dario.m4a",
+            author: "Dario",
+        },
+        {
+            id: "4",
+            title: "Varanasi",
+            pos: Varanasi,
+            tip_orientation: "top",
+            audio_url: "jawad.aac",
+            author: "Jawad",
+        },
     ];
 
     config.apiKey = "fur1hZSNTzJLlMuvOoJX";
@@ -111,9 +127,9 @@
         });
 
         new Marker()
-          .setLngLat({lng: 79.0839672088623, lat: 30.92615685415305 })
-          .setPopup(new Popup().setHTML("<h1>The Gomuck Water Source</h1>"))
-          .addTo(map)
+            .setLngLat({ lng: 79.0839672088623, lat: 30.92615685415305 })
+            .setPopup(new Popup().setHTML("<h1>The Gomuck Water Source</h1>"))
+            .addTo(map);
 
         points.forEach((point) => {
             const el = document.getElementById(`badge-${point.id}`);
@@ -135,7 +151,7 @@
             map?.setStyle(gen_style(style));
         });
 
-        map.on("click", (e) => console.log(e))
+        map.on("click", (e) => console.log(e));
     }
 
     function switch_map_on(pos: MapPosition) {
@@ -170,88 +186,144 @@
     }}>Get Pos</button
 > -->
 
-
 <div class="map-wrap">
     <div class="map" bind:this={mapContainer}></div>
 </div>
 
 {#if selected_point != null}
     <button
-        class="home-button"
+        class="home-button button"
         onclick={() => {
             selected_point = null;
             switch_map_on(Northern_India);
         }}
-
-        in:slide={{delay: 500, axis: 'x'}}
-        out:slide={{axis: 'x'}}
-
+        in:slide={{ delay: 500, axis: "x" }}
+        out:slide={{ axis: "x" }}
     >
-        <ArrowLeftIcon/> Return to the map
+        <ArrowLeftIcon /> Go to the map
     </button>
 
-    <div class="player" in:slide={{delay: 1000}} out:slide>
+    {#if points.indexOf(selected_point) > 0}
+        <button
+            in:slide={{ delay: 500}}
+            out:slide
+            class="button back-button"
+            onclick={() => {
+                if (selected_point != null) {
+                    let point_idx = points.indexOf(selected_point);
+                    if (point_idx > 0) {
+                        selected_point = points[point_idx - 1];
+                        switch_map_on(selected_point.pos);
+                    }
+                }
+            }}
+        >
+            <ArrowLeftIcon /> Back
+        </button>
+    {/if}
+
+    <button
+        class="button next-button"
+        in:slide={{ delay: 500}}
+        out:slide
+        onclick={() => {
+            if (selected_point != null) {
+                let point_idx = points.indexOf(selected_point);
+                if (point_idx < points.length - 1) {
+                    selected_point = points[point_idx + 1];
+                    switch_map_on(selected_point.pos);
+                } else {
+                    selected_point = null;
+                    switch_map_on(Northern_India);
+                }
+            }
+        }}
+    >
+        <ArrowRightIcon /> Next
+    </button>
+
+    <div class="player" in:slide={{ delay: 1000 }} out:slide>
         <div class="player-content">
-        <span class="player-title">{selected_point.id}. {selected_point.title}</span>
-        <span class="player-author">{selected_point.author}</span>
+            <span class="player-title"
+                >{selected_point.id}. {selected_point.title}</span
+            >
+            <span class="player-author">{selected_point.author}</span>
         </div>
         <audio controls>
-            <source src={selected_point.audio_url} type="audio/mpeg">
+            <source src={selected_point.audio_url} type="audio/mpeg" />
         </audio>
     </div>
 {:else}
-<button class="info-button home-button" in:slide={{delay: 500, axis: 'x'}} out:slide={{axis: 'x'}} onclick={() => info_modal_open = !info_modal_open}>
-    <InfoIcon/>
-</button>
+    <button
+        class="info-button home-button"
+        in:slide={{ delay: 500, axis: "x" }}
+        out:slide={{ axis: "x" }}
+        onclick={() => (info_modal_open = !info_modal_open)}
+    >
+        <InfoIcon />
+    </button>
 
-<div class="player" in:slide={{delay: 1000}} out:slide>
-    <div class="player-content">
-        <span class="player-title">5. The pollution of the Ganges River</span>
-        <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
+    <div class="player" in:slide={{ delay: 1000 }} out:slide>
+        <div class="player-content">
+            <span class="player-title"
+                >5. The pollution of the Ganges River</span
+            >
+            <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
+        </div>
+        <span
+            class="player-description"
+            style="font-weight: bold; font-size: 0.8em;">Conclusion :</span
+        >
+        <audio controls>
+            <source src="conclusion.aac" type="audio/mpeg" />
+        </audio>
     </div>
-    <span class="player-description" style="font-weight: bold; font-size: 0.8em;">Conclusion :</span>
-    <audio controls>
-        <source src="conclusion.aac" type="audio/mpeg">
-    </audio>
-</div>
 {/if}
 
 {#if info_modal_open && !selected_point}
     <div class="info-modal" in:slide out:slide>
-        <button class="close-button" onclick={() => info_modal_open = false}>
-            <XIcon/>
+        <button class="close-button" onclick={() => (info_modal_open = false)}>
+            <XIcon />
         </button>
         <div class="info-content">
             <h2>About the Map</h2>
-            <p>This map shows the pollution of the Ganges River across various points of interest.</p>
-            <p>This entire website was programmed by Le Hy Dario, the creators of each voice recording can be found in the corresponding points on the map.</p>
-            <p style="font-weight: bold;">Any copy of the content of this website, and more importantly, the voice recordings, is strictly prohibited without prior written consent by the creator.</p>
             <p>
-            The following licence applies to the code and other content, excluding the voice recordings which are subject to the copyright notice above.
-
-MIT License
-
-Copyright (c) 2025 Dario Le Hy
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</p>
-</div>
+                This map shows the pollution of the Ganges River across various
+                points of interest.
+            </p>
+            <p>
+                This entire website was programmed by Le Hy Dario, the creators
+                of each voice recording can be found in the corresponding points
+                on the map.
+            </p>
+            <p style="font-weight: bold;">
+                Any copy of the content of this website, and more importantly,
+                the voice recordings, is strictly prohibited without prior
+                written consent by the creator.
+            </p>
+            <p>
+                The following licence applies to the code and other content,
+                excluding the voice recordings which are subject to the
+                copyright notice above. MIT License Copyright (c) 2025 Dario Le
+                Hy Permission is hereby granted, free of charge, to any person
+                obtaining a copy of this software and associated documentation
+                files (the "Software"), to deal in the Software without
+                restriction, including without limitation the rights to use,
+                copy, modify, merge, publish, distribute, sublicense, and/or
+                sell copies of the Software, and to permit persons to whom the
+                Software is furnished to do so, subject to the following
+                conditions: The above copyright notice and this permission
+                notice shall be included in all copies or substantial portions
+                of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT
+                WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+                LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+                PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+                OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+                OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+                SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+            </p>
+        </div>
     </div>
 {/if}
 
@@ -268,7 +340,6 @@ SOFTWARE.
 {/each}
 
 <style>
-
     .info-modal {
         position: absolute;
         top: 50%;
@@ -308,11 +379,9 @@ SOFTWARE.
         height: 100%;
     }
 
-    .home-button {
+    .button {
         position: absolute;
         z-index: 1000;
-        top: 10px;
-        left: 10px;
         background-color: #007bff;
         border: none;
         color: white;
@@ -330,11 +399,26 @@ SOFTWARE.
         flex-wrap: nowrap;
     }
 
-    .home-button:hover {
+    .home-button {
+        top: 10px;
+        left: 10px;
+    }
+
+    .back-button {
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .next-button {
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .button:hover {
         background-color: #0056b3;
     }
 
-    .home-button:active {
+    .button:active {
         background-color: #004085;
     }
 
