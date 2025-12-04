@@ -246,7 +246,7 @@
             }
         }}
     >
-        <ArrowRightIcon /> Next
+        Next <ArrowRightIcon />
     </button>
 
 
@@ -263,7 +263,7 @@
     </div>
 {:else}
     <button
-        class="info-button home-button"
+        class="info-button button"
         in:slide={{ delay: 500, axis: "x" }}
         out:slide={{ axis: "x" }}
         onclick={() => (info_modal_open = !info_modal_open)}
@@ -274,13 +274,13 @@
     <div class="player" in:slide={{ delay: 1000 }} out:slide>
         <div class="player-content">
             <span class="player-title"
-                >5. The pollution of the Ganges River</span
+                >The pollution of the Ganges River</span
             >
             <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
         </div>
         <span
             class="player-description"
-            style="font-weight: bold; font-size: 0.8em;">Conclusion :</span
+            style="font-weight: bold; font-size: 0.8em;">5. Conclusion :</span
         >
         <audio controls>
             <source src="conclusion.aac" type="audio/mpeg" />
@@ -405,6 +405,11 @@
 
         text-wrap: nowrap;
         flex-wrap: nowrap;
+    }
+
+    .info-button {
+        top: 10px;
+        left: 10px;
     }
 
     .home-button {
