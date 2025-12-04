@@ -151,69 +151,6 @@ export function gen_style(style: StyleSpecification) {
     ]
   });
 
-  style.layers.push({
-    "id": "yamuna text",
-    "type": "symbol",
-    "source": "maptiler_planet",
-    "source-layer": "waterway",
-    "layout": {
-      "text-field": "Yamuna",
-      "text-font": [
-        "Noto Sans Regular"
-      ],
-      "visibility": "visible",
-      "icon-keep-upright": true,
-      "symbol-placement": "line",
-      "symbol-spacing": 279,
-      "text-anchor": "right",
-      "text-size": 13,
-      "symbol-avoid-edges": true
-    },
-    "paint": {
-      "text-color": "hsl(0, 0%, 0%)",
-      "icon-halo-color": "rgba(255, 255, 255, 1)",
-      "text-halo-color": "rgba(255, 255, 255, 1)",
-      "icon-halo-width": 1,
-      "text-halo-width": 1
-    },
-    "filter": [
-      "all",
-      [
-        "all",
-        [
-          "match",
-          [
-            "get",
-            "class"
-          ],
-          [
-            "river"
-          ],
-          true,
-          false
-        ],
-        [
-          "match",
-          [
-            "id"
-          ],
-          [
-            1159116803
-          ],
-          true,
-          false
-        ]
-      ],
-      [
-        "==",
-        [
-          "geometry-type"
-        ],
-        "LineString"
-      ]
-    ]
-  });
-
   // Ganga river
   style.layers.push({
     "id": "ganga_river",
@@ -291,6 +228,136 @@ export function gen_style(style: StyleSpecification) {
       ]
     ]
   });
+
+  style.layers.push({
+    "id": "City labels d",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "source-layer": "place",
+    "minzoom": 3,
+    "maxzoom": 16,
+    "layout": {
+      "symbol-sort-key": [
+        "to-number",
+        [
+          "get",
+          "rank"
+        ]
+      ],
+      "text-field": "{name:en}",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "text-max-width": 10,
+      "text-size": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            4,
+            0,
+            6,
+            0,
+            8,
+            0,
+            12,
+            18,
+            16,
+            20
+          ],
+      "visibility": "visible"
+    },
+    "paint": {
+      "text-color": "hsl(0, 0%, 100%)",
+      "text-halo-blur": 0.5,
+      "text-halo-color": "hsl(0, 0%, 0%)",
+      "text-halo-width": 1
+    },
+    "filter": [
+      "all",
+      [
+        "==",
+        "$type",
+        "Point"
+      ],
+      [
+        "==",
+        "class",
+        "city"
+      ],
+      [
+        "!=",
+        "capital",
+        2
+      ]
+    ]
+  })
+
+  style.layers.push({
+    "id": "yamuna text",
+    "type": "symbol",
+    "source": "maptiler_planet",
+    "source-layer": "waterway",
+    "layout": {
+      "text-field": "Yamuna",
+      "text-font": [
+        "Noto Sans Regular"
+      ],
+      "visibility": "visible",
+      "icon-keep-upright": true,
+      "symbol-placement": "line",
+      "symbol-spacing": 279,
+      "text-anchor": "right",
+      "text-size": 13,
+      "symbol-avoid-edges": true
+    },
+    "paint": {
+      "text-color": "hsl(0, 0%, 0%)",
+      "icon-halo-color": "rgba(255, 255, 255, 1)",
+      "text-halo-color": "rgba(255, 255, 255, 1)",
+      "icon-halo-width": 1,
+      "text-halo-width": 1
+    },
+    "filter": [
+      "all",
+      [
+        "all",
+        [
+          "match",
+          [
+            "get",
+            "class"
+          ],
+          [
+            "river"
+          ],
+          true,
+          false
+        ],
+        [
+          "match",
+          [
+            "id"
+          ],
+          [
+            1159116803
+          ],
+          true,
+          false
+        ]
+      ],
+      [
+        "==",
+        [
+          "geometry-type"
+        ],
+        "LineString"
+      ]
+    ]
+  })
 
   style.layers.push({
     "id": "Waterway copy 1",
@@ -421,56 +488,6 @@ export function gen_style(style: StyleSpecification) {
       ]
     ],
     "source-layer": "waterway"
-  })
-
-  style.layers.push({
-    "id": "Varanasi Name",
-    "type": "symbol",
-    "source": "maptiler_planet",
-    "layout": {
-      "text-field": "Varanasi",
-      "text-font": [
-        "Noto Sans Regular"
-      ],
-      "text-size": [
-        "step",
-        [
-          "zoom"
-        ],
-        0,
-        8.2,
-        31
-      ]
-    },
-    "paint": {
-      "icon-halo-color": "rgba(255, 255, 255, 1)",
-      "text-halo-color": "rgba(255, 255, 255, 1)",
-      "icon-halo-width": 1,
-      "text-halo-width": 1
-    },
-    "filter": [
-      "all",
-      [
-        "match",
-        [
-          "get",
-          "name"
-        ],
-        [
-          "Varanasi"
-        ],
-        true,
-        false
-      ],
-      [
-        "==",
-        [
-          "geometry-type"
-        ],
-        "Point"
-      ]
-    ],
-    "source-layer": "place"
   })
 
   style.layers.push({
@@ -634,6 +651,7 @@ export function gen_style(style: StyleSpecification) {
       ]
     ]
   })
+
 
   return style;
 }

@@ -64,7 +64,7 @@
             title: "New Delhi",
             pos: Okhla_barrage,
             tip_orientation: "right",
-            audio_url: "test.mp3",
+            audio_url: "mathilde.mp3",
             author: "Mathilde"
         },
         {
@@ -72,7 +72,7 @@
             title: "The Gomuck source",
             pos: Gomuck,
             tip_orientation: "left",
-            audio_url: "test.mp3",
+            audio_url: "clovis.m4a",
             author: "Clovis"
         },
         {
@@ -80,7 +80,7 @@
           title: "Varanasi",
           pos: Varanasi,
           tip_orientation: "top",
-          audio_url: "test.mp3",
+          audio_url: "jawad.aac",
           author: "Jawad"
         },
         {
@@ -88,7 +88,7 @@
           title: "Narora Ramsar Site",
           pos: Narora,
           tip_orientation: "left",
-          audio_url: "test.mp3",
+          audio_url: "dario.mp3",
           author: "Dario"
         }
     ];
@@ -192,7 +192,7 @@
 
     <div class="player" in:slide={{delay: 1000}} out:slide>
         <div class="player-content">
-        <span class="player-title">{selected_point.title}</span>
+        <span class="player-title">{selected_point.id}. {selected_point.title}</span>
         <span class="player-author">{selected_point.author}</span>
         </div>
         <audio controls>
@@ -206,11 +206,12 @@
 
 <div class="player" in:slide={{delay: 1000}} out:slide>
     <div class="player-content">
-        <span class="player-title">The pollution of the Ganges River</span>
+        <span class="player-title">5. The pollution of the Ganges River</span>
         <span class="player-author">Mathilde, Jawad, Clovis and Dario</span>
     </div>
+    <span class="player-description" style="font-weight: bold; font-size: 0.8em;">Conclusion :</span>
     <audio controls>
-        <source src="test.mp3" type="audio/mpeg">
+        <source src="conclusion.aac" type="audio/mpeg">
     </audio>
 </div>
 {/if}
